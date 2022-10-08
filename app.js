@@ -15,10 +15,10 @@ connectDB()
 const root={
   isUser:()=>{}
 }
-app.use("/favicon.ico",(res,res,next)=>{
+app.use("/favicon.ico",(req,res,next)=>{
   res.sendFile("./favicon.png")
 })
-app.use("/",(res,res,next)=>{
+app.use("/",(req,res,next)=>{
   res.send("Home page")
 })
 app.use("/graphql", graphqlHTTP({
