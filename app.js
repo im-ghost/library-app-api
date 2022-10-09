@@ -17,13 +17,15 @@ const root={
 }
 
 app.use(express.static(path.join(__dirname, 'public')));
-
+/*
 app.use("/favicon.ico",(req,res,next)=>{
   return "./favicon.png"
-})
-app.use("/",(req,res,next)=>{
-  res.send("Home page")
-})
+})*/
+app.route('/')
+  .get(function (req, res) {
+    res.sendFile(process.cwd() + '/index.html');
+});
+
 app.use("/graphql", graphqlHTTP({
   schema,
   graphiql: true
