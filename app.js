@@ -15,6 +15,9 @@ connectDB()
 const root={
   isUser:()=>{}
 }
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use("/favicon.ico",(req,res,next)=>{
   return "./favicon.png"
 })
