@@ -12,8 +12,6 @@ const app = express();
 app.use(cors())
 connectDB()
 
-
-app.use(express.static(path.join(__dirname, 'public')));
 app.use("/", graphqlHTTP({
   schema,
   graphiql: true

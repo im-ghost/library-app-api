@@ -12,32 +12,13 @@ var Book = require("./models/book");
 var Genre = require("./models/genre");
 var Author = require("./models/author");
 var User = require("./models/user")
-const {createBook} = require("./controllers/book.js")
-
-const _ = require('lodash')
-const ensureAuth =async (fn,args,token) =>{
-  if(token){
-    console.log("here")
-  const decoded = jwt.verify(token, "secret ")
-  console.log(decoded)
-      const user = await User.findById(decoded.id).select('-password')
-  
-       if(user){
-         if(args){ 
-           return fn(args)
-           
-         }
-         else {
-     return fn()
-         }
-       }else{
-         throw new Error("no authorized ")
-       }
-  }else{
-    throw new Error("No token")
-  }
-}/*
-*/
+const {
+  createBook
+} = require("./controllers/book.js")
+const {} = require("@/controllers/author.js")
+const {} = require("@/controllers/user.js")
+const {} = require("@/controllers/genre.js")
+const ensureAuth = require("./middlewares/authMiddleware.js");
 const authorType = new GraphQLObjectType({
   name: 'author',
   fields: ()=>({
