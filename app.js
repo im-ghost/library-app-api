@@ -12,21 +12,9 @@ const app = express();
 app.use(cors())
 connectDB()
 
-const root={
-  isUser:()=>{}
-}
 
 app.use(express.static(path.join(__dirname, 'public')));
-/*
-app.use("/favicon.ico",(req,res,next)=>{
-  return "./favicon.png"
-})*/
-app.route('/')
-  .get(function (req, res) {
-    res.sendFile(process.cwd() + '/index.html');
-});
-
-app.use("/graphql", graphqlHTTP({
+app.use("/", graphqlHTTP({
   schema,
   graphiql: true
 }))
