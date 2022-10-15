@@ -22,6 +22,10 @@ const userSchema = mongoose.Schema(
     stars:{
       type:Array,
       default:[]
+    },
+    authors:{
+      type:Array,
+      default:[]
     }
   },
   {
