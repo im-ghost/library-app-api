@@ -15,10 +15,10 @@ var User = require("./models/user")
 const {
   createBook
 } = require("./controllers/book.js")
-const {} = require("@/controllers/author.js")
-const {} = require("@/controllers/user.js")
-const {} = require("@/controllers/genre.js")
-const ensureAuth = require("./middlewares/authMiddleware.js");
+const {} = require("./controllers/author.js")
+const {} = require("./controllers/user.js")
+const {} = require("./controllers/genre.js")
+const ensureAuth = require("./middleware/authMiddleware.js");
 const authorType = new GraphQLObjectType({
   name: 'author',
   fields: ()=>({
@@ -26,9 +26,11 @@ const authorType = new GraphQLObjectType({
       type: GraphQLString
     },
     ownerId: {
-      type: GraphQLString
+       type: userType,
+      resolve(parent, args) {
+        return User.findById(parent.ownerId)
     },
-    
+    },
     DOB: {
       type: GraphQLString
    
@@ -52,6 +54,12 @@ const userType = new GraphQLObjectType({
   fields: ()=>({
     name: {
       type: GraphQLString
+    },
+    authors:{
+        type: new GraphQLList(authorType),
+      resolve(parent, args) {
+        return Author.findById(parent._id )
+      }
     },
     email: {
       type: GraphQLString
@@ -81,7 +89,10 @@ const genreType = new GraphQLObjectType({
       type: GraphQLString
     },
      ownerId: {
-      type: GraphQLString
+       type: authorType,
+      resolve(parent, args) {
+        return Author.findById(parent.ownerId)
+      }
     },
     booksIds: {
       type: new GraphQLList(bookType),
