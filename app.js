@@ -14,6 +14,7 @@ connectDB()
 
 app.use("/", graphqlHTTP({
   schema,
+  pretty:true,
   graphiql: true
 }))
 module.exports = app;
