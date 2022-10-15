@@ -1,7 +1,6 @@
-const asyncHandler = require('express-async-handler')
-const generateToken = require('../utils/genToken.js')
-const User = require('../models/user.js');
 
+const User = require('../models/user.js');
+/*
 // @desc    Auth user & get token
 // @route   POST /api/users/login
 // @access  Public
@@ -178,3 +177,5 @@ module.exports = {
   getUserById,
   updateUser,
 }
+*/
+module.exports = "test"
