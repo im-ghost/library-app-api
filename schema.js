@@ -19,6 +19,37 @@ const {} = require("./controllers/author.js")
 const {} = require("./controllers/user.js")
 const {} = require("./controllers/genre.js")
 const ensureAuth = require("./middleware/authMiddleware.js");
+const update = async (model,args) => {
+ 
+ let dModel = await model.findOne({_id:args._id});
+  
+  await ((args)=>{
+    for(arg of Object.keys(args)){
+ 
+    if(args[arg] && arg !== "token"){
+      console.log(args[arg])
+      dModel[arg] = args[arg];
+    }
+  }
+  console.log("here")
+  })(args)
+ console.log(dModel)
+ return dModel.save();
+}
+/*
+*const update = {
+      messages: room.messages
+    }
+    const filter = {
+      _id: room._id
+    }
+    let doc = await Room.findOneAndUpdate(filter, update, {
+      returnOriginal: false,
+      new: true
+    });
+   
+
+*/
 const authorType = new GraphQLObjectType({
   name: 'author',
   fields: ()=>({
@@ -312,6 +343,33 @@ const Mutations = new GraphQLObjectType({
        
       }
     },
+    updateBook:{
+      type:bookType,
+      args:{
+        _id:{
+          type:GraphQLString
+         },name: {
+          type: GraphQLString
+        },
+        authorId: {
+          type: GraphQLID
+        },
+        content: {
+          type: GraphQLString
+        },
+        genreId: {
+          type: GraphQLID
+        },
+        token:{
+          type:GraphQLString
+        }
+      },
+      async resolve(parent,args){
+       
+     return ensureAuth(update,[Book,args],args.token)
+       
+      }
+    },
     delGenre:{
       type: genreType,
       args:{_id:{type:GraphQLString},token:{
@@ -322,6 +380,33 @@ const Mutations = new GraphQLObjectType({
          return Genre.find({})
        }
        return ensureAuth(delG,null,args.token)
+      }
+    },
+    updateGenre:{
+      type: genreType,
+      args:{
+        _id:{
+          type:GraphQLString
+           },
+           token:{
+  type:GraphQLString
+},
+       
+        name: {
+          type: GraphQLString
+        },
+ ownerId: {
+      type: GraphQLString
+    },
+    booksIds:{
+      type: new GraphQLList(GraphQLID)
+    },
+    token:{
+      type:GraphQLString
+    }
+      },
+      async resolve(parent,args){
+       return ensureAuth(update,[Genre,args],args.token)
       }
     },
     delAuthor:{
@@ -335,6 +420,35 @@ const Mutations = new GraphQLObjectType({
          return Author.find({})
        }
        return ensureAuth(delA,null,args.token)
+      }
+    },
+    updateAuthor:{
+      type: authorType,
+      args:{
+        _id:{
+          type:GraphQLString
+         },
+        name: {
+          type: GraphQLString
+        },
+        booksIds:{
+          type:new GraphQLList(GraphQLID)
+        },
+        DOD: {
+          type: GraphQLString
+        },
+        DOB: {
+          type: GraphQLString
+        },
+         ownerId: {
+      type: GraphQLString
+    },
+    token:{
+      type:GraphQLString
+    }
+      },
+      async resolve(parent,args){
+       return ensureAuth(update,[Author,args],args.token)
       }
     },
     delUser:{
@@ -354,6 +468,34 @@ const Mutations = new GraphQLObjectType({
          return User.find({})
       }
       return ensureAuth(delU,null,args.token)
+    }
+    },
+    updateUser:{
+      type: userType,
+      args:{
+        _id:{
+          type:GraphQLString
+},
+        name: {
+          type: GraphQLString
+        },
+        email: {
+          type: GraphQLString
+        },
+        password: {
+          type: GraphQLString
+        },
+        stars: {
+          type: GraphQLString
+        },
+        authors: {
+          type: GraphQLString
+        },
+        
+        
+      },
+      async resolve(parent,args){
+      return ensureAuth(update,[User,args],args.token)
     }
     },
   },
