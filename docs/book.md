@@ -40,7 +40,7 @@
 }
 ```
 ### Create a Book
-To create a book,all fields are required except the DOB
+To create a book,all fields are required including a user's token except the DOB
 
 ```javascript
 mutation{
@@ -66,11 +66,11 @@ mutation{
 
 
 ### Delete a Book
-To delete a book only the book id is required
+To delete a book only the book id and a user's token is required
 
 ```javascript
 mutation{
-  delBook(_id:""){
+  delBook(_id:"",token:""){
     
   }
 }
