@@ -6,8 +6,15 @@ const ensureAuth =async (fn,args,token) =>{
   const decoded = jwt.verify(token, "secret ")
       const user = await User.findById(decoded.id).select('-password')
        if(user){
-       args ? fn(args) : fn()
-       }else{
+       if(args){
+         return fn(...args)
+       } 
+       else{
+         return fn()
+       }
+         
+       }
+       else{
          throw new Error("Not authorized ")
        }
   }else{
