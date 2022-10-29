@@ -14,7 +14,8 @@ const bookSchema = new Schema({
     type: String
   },
   DOB: {
-    type: Date
+    type: Date,
+    default:new Date()
   },
   content: {
     type: String
