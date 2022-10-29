@@ -4,6 +4,7 @@ This API is a library app API.
 It accepts all CRUD operations in each of the available schemas.
 
 ## The Schemas
-### [./book.md](The Book's schema)
-### [./author.md](The Author's schema)
-### [./genre.md](The Genre's schema)
+[http://localhost:5000](http://localhost:5000)
+### [The Book's Schema](./book.md)
+### [The Author's Schema](./author.md)
+### [The Genre's Schema](./genre.md)
